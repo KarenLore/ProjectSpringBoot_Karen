@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping("/api/country")
 public class CountryController {
@@ -40,7 +38,7 @@ public class CountryController {
         return ResponseEntity.notFound().build();
     }
     
-    @PostMapping("path")
+    @PostMapping //("path")
     public ResponseEntity<?> create(@RequestBody Country country){
         return ResponseEntity.status(HttpStatus.CREATED).body(countryService.save(country));
     }
@@ -52,6 +50,5 @@ public class CountryController {
             return ResponseEntity.ok(countryOptional.orElseThrow());
         }
         return ResponseEntity.notFound().build();
-    }
-    
+    } 
 }
