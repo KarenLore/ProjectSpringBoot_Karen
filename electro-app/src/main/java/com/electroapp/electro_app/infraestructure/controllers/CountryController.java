@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -41,6 +42,15 @@ public class CountryController {
     @PostMapping //("path")
     public ResponseEntity<?> create(@RequestBody Country country){
         return ResponseEntity.status(HttpStatus.CREATED).body(countryService.save(country));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody Country country, @PathVariable Long id){
+        Optional<Country> countryOptional = countryService.update(id, country);
+        if (countryOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(countryOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

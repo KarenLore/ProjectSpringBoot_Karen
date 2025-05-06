@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.electroapp.electro_app.application.services.ICityService;
 import com.electroapp.electro_app.domain.entities.City;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/city")
@@ -41,6 +43,16 @@ public class CityController {
     public ResponseEntity<?> create(@RequestBody City city){
         return ResponseEntity.status(HttpStatus.CREATED).body(cityService.save(city));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody City city, @PathVariable Long id){
+        Optional<City> cityOptional = cityService.update(id, city);
+        if (cityOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(cityOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
+    }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
