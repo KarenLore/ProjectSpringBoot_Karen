@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.electroapp.electro_app.domain.entities.fkclass.TercerosId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -31,6 +32,11 @@ public class Terceros {
 
     @Column(length = 100, nullable = false)
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "cities_id")
+    @JsonBackReference
+    City cities;
 
     @OneToMany(mappedBy = "tercero", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
